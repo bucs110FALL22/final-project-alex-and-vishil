@@ -5,12 +5,15 @@
 ### << Semester, Year >>
 ### [Assignment Description](https://docs.google.com/document/d/1H4R6yLL7som1lglyXWZ04RvTp_RvRFCCBn6sqv-82ps/edit?usp=sharing)
 
-<< [repl](#) >>
+[<< [repl](#) >>](https://replit.com/join/xbkbwaktlc-alexeskenazi)
 
 << [link to demo presentation slides](#) >>
 
 ### Team: << team name >>
 #### << Team Members >>
+
+ Alex Eskenazi
+ Vishil Patel
 
 ***
 
