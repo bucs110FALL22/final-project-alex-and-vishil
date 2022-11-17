@@ -18,3 +18,5 @@ class GameoverScreen:
                                  (x_text, y))
         self.helper.display_text(self.display.surface, 'Press SPACE to start',
                                  50, (x_text, y + 100))
+        self.helper.display_text(self.display.surface, 'Q to quit', 50,
+                                 (x_text, y + 150))

@@ -2,6 +2,7 @@ import pygame
 
 from src.display import Display
 from src.gameoverscreen import GameoverScreen
+from src.gamescreen import GameScreen
 from src.welcomescreen import WelcomeScreen
 
 
@@ -14,6 +15,7 @@ class Controller:
         self.is_debug = True
         self._app_state = 'welcome'
         self.welcome_screen = WelcomeScreen(self.display)
+        self.game_screen = GameScreen(self.display)
         self.gameover_screen = GameoverScreen(self.display)
 
     def mainloop(self):
@@ -51,6 +53,7 @@ class Controller:
 
         # redraw
         self.display.draw_background()
+        self.diplay_game()
         pygame.display.update()
 
     def gameoverloop(self):
@@ -78,6 +81,9 @@ class Controller:
 
     def diplay_welcome(self):
         self.welcome_screen.draw()
+
+    def diplay_game(self):
+        self.game_screen.draw()
 
     def diplay_gameover(self):
         self.gameover_screen.draw()
