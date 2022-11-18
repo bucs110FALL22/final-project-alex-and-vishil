@@ -18,6 +18,7 @@ class Bomb:
         damage: (int) damage caused by the bomb on the character health.
         score_value: (int) score increase gained by the character when avoiding the bomb
         '''
+        self.image = 'bomb'
         self.num_of_lanes = num_of_lanes
         self.lane = lane
         self.height = 0

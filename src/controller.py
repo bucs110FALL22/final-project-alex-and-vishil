@@ -5,12 +5,16 @@ from src.gameoverscreen import GameoverScreen
 from src.gamescreen import GameScreen
 from src.welcomescreen import WelcomeScreen
 
+DISPLAY_WIDTH = 1200
+DISPLAY_HEIGHT = 1000
+NUM_OF_LANES: int = 10
+
 
 class Controller:
 
     def __init__(self):
         # setup pygame data
-        self.display = Display()
+        self.display = Display(width=DISPLAY_WIDTH, height=DISPLAY_HEIGHT, num_of_lanes=NUM_OF_LANES)
         self._running = True
         self.is_debug = False
         self._app_state = 'welcome'

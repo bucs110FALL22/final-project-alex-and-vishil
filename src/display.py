@@ -5,12 +5,12 @@ from src.image import Image
 
 
 class Display:
-    NUM_OF_LANES: int = 10
 
-    def __init__(self, width: int = 1200, height: int = 1000) -> None:
+    def __init__(self, width: int = 1200, height: int = 1000, num_of_lanes: int = 10) -> None:
         self.width = width
         self.height = height
-        self.lane_width = self.width / Display.NUM_OF_LANES
+        self.num_of_lanes = num_of_lanes
+        self.lane_width = self.width / self.num_of_lanes
 
         self.fix_missing_display_error()
         self.setup_display_surface()

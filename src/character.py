@@ -12,7 +12,7 @@ class MainCharacter():
         powerups: (float) factor of score increase
         lane: (int) vertical lane where the character appears
         '''
-        self.image = ''
+        self.image = 'character'
         self.num_of_lanes = num_of_lanes
         self.lane = num_of_lanes / 2
         self.visible = True
