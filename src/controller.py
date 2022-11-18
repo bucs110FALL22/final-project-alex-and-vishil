@@ -12,15 +12,20 @@ class Controller:
         # setup pygame data
         self.display = Display()
         self._running = True
-        self.is_debug = True
+        self.is_debug = False
         self._app_state = 'welcome'
         self.welcome_screen = WelcomeScreen(self.display)
         self.game_screen = GameScreen(self.display)
         self.gameover_screen = GameoverScreen(self.display)
+        self.clock = pygame.time.Clock()
+        self.counter = 0
 
     def mainloop(self):
         # select state loop
         while self._running:
+            self.counter += 1
+            if self.is_debug:
+                print('counter = ' + str(self.counter))
             if self._app_state == 'welcome':
                 self.menuloop()
             elif self._app_state == 'game-on':
@@ -50,10 +55,13 @@ class Controller:
             self.handle_game_events(event)
 
         # update data
+        self.game_screen.gamelogic_tick()
 
         # redraw
         self.display.draw_background()
         self.diplay_game()
+        # self.clock.tick(10)  # controls game speed.
+        pygame.display.flip()
         pygame.display.update()
 
     def gameoverloop(self):
@@ -95,12 +103,14 @@ class Controller:
         self._app_state = 'game-over'
 
     def handle_global_events(self, event):
-        self.check_and_quit_app_if_needed(event)
-        self.handle_global_keyboard_event(event)
+        if self.check_and_quit_app_if_needed(event):
+            self.handle_global_keyboard_event(event)
 
-    def check_and_quit_app_if_needed(self, event):
+    def check_and_quit_app_if_needed(self, event) -> bool:
         if (event.type == pygame.QUIT):
             self.exit_app()
+            return False
+        return True
 
     def exit_app(self):
         self._running = False
@@ -116,6 +126,8 @@ class Controller:
         if event.type == pygame.KEYDOWN:
             if event.key in [pygame.K_o]:
                 self.end_game()
+                return
+        self.game_screen.handle_game_events(event)
 
     def handle_gameover_events(self, event):
         if event.type == pygame.KEYDOWN:
