@@ -19,38 +19,13 @@ class MainCharacter():
         self.top = 100 - self.height
         self.visible = True
         self.lives = 3
-        self.score = 0
 
     def is_dead(self) -> bool:
+        '''
+        Checks if the character is still alive
+        return: (bool) True if it is still alive
+        '''
         return self.lives <= 0
-
-    def increase_health(self, delta: int = 1):
-        '''
-        Increaces the character's number of lives by n
-        delta: (int) increase in number of lives
-        '''
-        self.health += delta
-
-    def decrease_health(self, delta: int = -1):
-        '''
-        Decreaces the character's number of lives by n
-        delta: (int) decrease in number of lives
-        '''
-        self.powerups -= delta
-
-    def increase_powerups(self, delta: int = 1):
-        '''
-        Increaces the character's number of powerups by n
-        delta: (int) increase in number of powerups
-        '''
-        self.powerups += delta
-
-    def decrease_powerups(self, delta: int = 1):
-        '''
-        Decreaces the character's number of powerups by n
-        delta: (int) decrease in number of powerups
-        '''
-        self.powerups -= delta
 
     def move_right(self):
         '''

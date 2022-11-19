@@ -1,47 +1,46 @@
+from src.helper import Helper
+from src.image import Image
+from src.assets import Assets
+from src.display import Display
+
+
 class Scoreboard():
     '''
-  Scoreboard represents the model for the information displayd regarding the 
-  state of the game, including the score, lives, powerups, level, and high score
-  '''
-
-    def __init__(self,
-                 rect,
-                 score: int = 0,
-                 level: int = 1,
-                 lives: int = 0,
-                 powerups: float = 0,
-                 high_score: int = 0) -> None:
-        '''
-    Model for the game scoreboard. Holds the data to display on the screen.
-    Does not inherit from Sprite
-    rect: (str) character's rectangle in the display
-    score: (int) game score
-    level: (int) game level
-    lives: (int) number of lives or strength the character has
-    powerups: (float) factor of score increase
-    high_score: (int) current highest score
+    View for the scoreboard
     '''
-        self.rect = rect
-        self.score = score
-        self.level = level
-        self.lives = lives
-        self.powerups = powerups
-        self.high_score = high_score
 
-    def reset(self):
-        '''
-    Resets the score, lives, and powerups. 
-    '''
-        self.score = 0
-        self.level = 1
-        self.lives = 3
-        self.powerups = 0
+    def __init__(self, display: Display) -> None:
+        self.display = display
+        self.init_health_image()
 
-    def set_score(self, new_score: int = 0):
-        '''
-    Sets the new score and updates the highest score if needed.
-    new_score: (int) new game score
-    '''
-        self.score = new_score
-        if new_score > self.high_score:
-            self.high_score = new_score
+    def init_health_image(self):
+        width = self.display.lane_width / 2
+        height = self.display.lane_width / 2
+        image_file = Assets.images.get('health')
+        self.health_image = Image(image_file, width, height)
+
+    def draw(self, health: int = 0, score: int = 0, max_score: int = 0):
+        self.draw_health(health)
+        self.draw_score(score)
+        self.draw_max_score(max_score)
+
+    def draw_health(self, health: int):
+        margin = self.display.lane_width / 2
+        for live in range(health):
+            x_health = margin + margin * live
+            y_health = margin / 2
+            self.health_image.draw(self.display.surface, x_health, y_health)
+
+    def draw_score(self, score: int):
+        margin = self.display.lane_width / 2
+        x_score = self.display.width / 2
+        y_score = margin
+        text_score = 'Score: ' + str(score)
+        Helper.print(self.display.surface, text_score, 30, (x_score, y_score))
+
+    def draw_max_score(self, max_score: int):
+        margin = self.display.lane_width / 2
+        x_score = self.display.width - 3 * margin
+        y_score = margin
+        text_score = 'Max: ' + str(max_score)
+        Helper.print(self.display.surface, text_score, 30, (x_score, y_score))

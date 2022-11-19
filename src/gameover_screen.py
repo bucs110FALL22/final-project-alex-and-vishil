@@ -1,22 +1,30 @@
 from src.display import Display
-from src.pygame_helpers import Helpers
+from src.helper import Helper
 
 
 class GameoverScreen:
 
     def __init__(self, display: Display) -> None:
-        self.helper = Helpers()
         self.display = display
 
     def draw(self):
         self.display_game_over()
 
     def display_game_over(self):
+        surface = self.display.surface
         x_text = self.display.width / 2
-        y = self.display.height / 2 - 50
-        self.helper.display_text(self.display.surface, 'Game Over', 100,
-                                 (x_text, y))
-        self.helper.display_text(self.display.surface, 'Press SPACE to start',
-                                 50, (x_text, y + 100))
-        self.helper.display_text(self.display.surface, 'Q to quit', 50,
-                                 (x_text, y + 150))
+        y_text = self.display.height / 2
+
+        text = 'Game Over'
+        font_size = 100
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+        y_text += font_size
+        text = 'Press SPACE to start'
+        font_size = 50
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+        y_text += font_size
+        text = 'Q to quit'
+        font_size = 50
+        Helper.print(surface, text, font_size, (x_text, y_text))

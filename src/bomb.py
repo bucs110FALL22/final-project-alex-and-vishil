@@ -4,32 +4,31 @@ class Bomb:
     '''
 
     def __init__(self,
-                 num_of_lanes: int = 0,
                  speed: float = 1,
                  lane: int = 0,
-                 damage: int = 0,
+                 log_height: float = 15,
                  score_value: int = 0) -> None:
         '''
         constructor
-        image: (str) file name for the bomb image
-        rect: (str) bomb rectangle in the display
         speed: (float) Vertical speed at which the bomb drops
         lane: (int) vertical lane where the bomb moves down.
-        damage: (int) damage caused by the bomb on the character health.
-        score_value: (int) score increase gained by the character when avoiding the bomb
+        log_height: (int) bomb height as percent of the game vertical area.
+        score_value: (int) score increase gained by avoiding the bomb
         '''
         self.image = 'bomb'
-        self.num_of_lanes = num_of_lanes
         self.lane = lane
-        self.top = 0
-        self.height = 100 / self.num_of_lanes
+        self.log_depth = 0  # depth as percent of the game vertical area.
+        self.log_height = log_height
         self.speed = speed
-        self.damage = damage
         self.visible = True
         self.exploded = False
         self.score_value = score_value
 
     def reset(self):
+        '''
+        Restores the bomb data.
+        '''
+        self.log_depth = 0
         self.visible = True
         self.exploded = False
 
@@ -38,10 +37,10 @@ class Bomb:
         Updates the position of the bomb vertically according to the speed
         '''
         full_height = 100
-        new_height = self.top + self.speed
+        new_height = self.log_depth + self.speed
         if new_height >= full_height:
             self.reset()
-        self.top = new_height % full_height
+        self.log_depth = new_height % full_height
 
     def bottom(self):
-        return self.top + self.height
+        return self.log_depth + self.log_height

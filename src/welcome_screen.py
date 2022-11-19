@@ -1,5 +1,5 @@
 from src.display import Display
-from src.pygame_helpers import Helpers
+from src.helper import Helper
 from src.assets import Assets
 from src.image import Image
 
@@ -7,40 +7,60 @@ from src.image import Image
 class WelcomeScreen:
 
     def __init__(self, display: Display) -> None:
-        self.helper = Helpers()
         self.display = display
-        self.welcome_image = Image(Assets.images.get('welcome-character'),
-                                   self.display.width / 4,
-                                   self.display.height / 4)
+        self.init_welcome_charater_image()
+
+    def init_welcome_charater_image(self):
+        image_file = Assets.images.get('welcome-character')
+        image_width = self.display.width / 4
+        image_height = self.display.height / 4
+        self.welcome_image = Image(image_file, image_width, image_height)
 
     def draw(self):
-        x_text = self.display.width / 2
-        y_text = self.display.height / 2 + 80
-        self.helper.display_text(self.display.surface, 'Mario Bomber', 100,
-                                 (x_text, y_text))
-        self.helper.display_text(self.display.surface, 'Press SPACE to start',
-                                 50, (x_text, y_text + 100))
-        self.helper.display_text(self.display.surface,
-                                 'By Alex E. and Vishil P.', 30,
-                                 (x_text, y_text + 170))
+        self.draw_game_title()
         self.draw_welcome_character()
         self.diplay_instructions()
 
-    def diplay_instructions(self):
+    def draw_game_title(self):
+        surface = self.display.surface
         x_text = self.display.width / 2
-        self.helper.display_text(
-            self.display.surface,
-            'Instructions: Bombs kill you and mushrooms keep you alive!', 20,
-            (x_text, self.display.height - 120))
-        self.helper.display_text(
-            self.display.surface,
-            'Every bomb gives you points. Turtles slow the game down', 20,
-            (x_text, self.display.height - 80))
-        self.helper.display_text(
-            self.display.surface,
-            'Press G for Grid (debug). S to toggle music. Q to Quit', 20,
-            (x_text, self.display.height - 40))
+        y_text = self.display.height / 2
+
+        text = 'Mario Bomber'
+        font_size = 100
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+        y_text += font_size
+        text = 'Press SPACE to start'
+        font_size = 50
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+        y_text += 2 * font_size
+        text = 'By Alex E. and Vishil P.'
+        font_size = 30
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+    def diplay_instructions(self):
+        surface = self.display.surface
+        x_text = self.display.width / 2
+        y_text = self.display.height - 120
+
+        text = 'Instructions: Bombs kill you and mushrooms keep you alive!'
+        font_size = 20
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+        y_text += font_size
+        text = 'Every bomb gives you points. Turtles slow the game down'
+        font_size = 20
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+        y_text += font_size
+        text = 'Press G for Grid (debug). S to toggle music. Q to Quit'
+        font_size = 20
+        Helper.print(surface, text, font_size, (x_text, y_text))
 
     def draw_welcome_character(self):
-        self.welcome_image.draw(self.display.surface, self.display.width / 4,
-                                self.display.height / 4)
+        surface = self.display.surface
+        x_image = self.display.width / 4
+        y_image = self.display.height / 4
+        self.welcome_image.draw(surface, x_image, y_image)
