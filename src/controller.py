@@ -1,8 +1,8 @@
 import pygame
+from src.game import Game
 from src.logger import Logger
 from src.display import Display
 from src.gameover_screen import GameoverScreen
-from src.game_screen import GameScreen
 from src.welcome_screen import WelcomeScreen
 
 DISPLAY_WIDTH: int = 1200
@@ -20,66 +20,63 @@ class Controller:
         self.display = Display(width=DISPLAY_WIDTH,
                                height=DISPLAY_HEIGHT,
                                num_of_lanes=NUM_OF_LANES)
-        self._running = True
-        self._app_state = 'welcome'
         self.welcome_screen = WelcomeScreen(self.display)
-        self.game_screen = GameScreen(self.display)
+        self.game = Game(self.display)
         self.gameover_screen = GameoverScreen(self.display)
         self.clock = pygame.time.Clock()
-        self.counter = 0
+        self._running = True
+        self.set_wecomescreen_state()
 
     def mainloop(self):
         # select state loop
         while self._running:
-            self.counter += 1
-            if self._app_state == 'welcome':
+            if self.app_state == 'welcome':
                 self.menuloop()
-            elif self._app_state == 'game-on':
+            elif self.app_state == 'game-on':
                 self.gameloop()
-            elif self._app_state == 'game-over':
+            elif self.app_state == 'game-over':
                 self.gameoverloop()
 
     def menuloop(self):
         # event loop
         for event in pygame.event.get():
-            self.handle_global_events(event)
-            self.handle_welcome_screen_events(event)
+            self.handle_global_event(event)
+            self.handle_welcome_screen_event(event)
 
-        # update data
+        # update data - No data to update
 
         # redraw
         self.display.draw_background()
-        self.diplay_welcome()
+        self.welcome_screen.draw()
         pygame.display.update()
 
     def gameloop(self):
         # event loop
         for event in pygame.event.get():
-            self.handle_global_events(event)
-            self.handle_game_events(event)
+            self.handle_global_event(event)
+            self.game.hangle_event(event)
 
         # update data
-        if not self.game_screen.gamelogic_tick():
-            self._app_state = 'game-over'
+        self.game.update_data()
+        if self.game.is_over():
+            self.set_gameover_state()
 
         # redraw
         self.display.draw_background()
-        self.diplay_game()
-        # self.clock.tick(10)  # controls game speed.
-        pygame.display.flip()
+        self.game.draw()
         pygame.display.update()
 
     def gameoverloop(self):
         # event loop
         for event in pygame.event.get():
-            self.handle_global_events(event)
-            self.handle_gameover_events(event)
+            self.handle_global_event(event)
+            self.handle_gameover_event(event)
 
-        # update data
+        # update data - No data to update
 
         # redraw
         self.display.draw_background()
-        self.diplay_gameover()
+        self.gameover_screen.draw()
         pygame.display.update()
 
     def handle_global_keyboard_event(self, event):
@@ -92,23 +89,14 @@ class Controller:
         if event.key in [pygame.K_q]:
             self.exit_app()
 
-    def diplay_welcome(self):
-        self.welcome_screen.draw()
-
-    def diplay_game(self):
-        self.game_screen.draw()
-
-    def diplay_gameover(self):
-        self.gameover_screen.draw()
-
     def start_game(self):
-        self._app_state = 'game-on'
-        self.game_screen.start()
+        self.set_gameon_state()
+        self.game.start()
 
     def end_game(self):
-        self._app_state = 'game-over'
+        self.set_gameover_state()
 
-    def handle_global_events(self, event):
+    def handle_global_event(self, event):
         if self.check_and_quit_app_if_needed(event):
             self.handle_global_keyboard_event(event)
 
@@ -123,7 +111,7 @@ class Controller:
         pygame.quit()
         raise SystemExit
 
-    def handle_welcome_screen_events(self, event):
+    def handle_welcome_screen_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key in [pygame.K_SPACE]:
                 self.start_game()
@@ -135,7 +123,16 @@ class Controller:
                 return
         self.game_screen.game_controller.handle_game_events(event)
 
-    def handle_gameover_events(self, event):
+    def handle_gameover_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key in [pygame.K_SPACE]:
                 self.start_game()
+
+    def set_wecomescreen_state(self):
+        self.app_state = 'welcome'
+
+    def set_gameon_state(self):
+        self.app_state = 'game-on'
+
+    def set_gameover_state(self):
+        self.app_state = 'game-over'

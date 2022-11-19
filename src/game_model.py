@@ -10,6 +10,7 @@ class GameModel:
         self.num_of_lanes = num_of_lanes
         self.score = 0
         self.max_score = 0
+        self.is_over = False
         self.start_game()
 
     def start_game(self):
@@ -18,6 +19,7 @@ class GameModel:
         self.init_bombs()
 
     def reset_score(self):
+        self.is_over = False
         self.max_score = max(self.score, self.max_score)
         self.score = 0
 
@@ -38,13 +40,12 @@ class GameModel:
                         score_value=value)
             self.bombs.append(bomb)
 
-    def gamelogic_tick(self) -> bool:
+    def update_data(self):
         self.drop_bombs()
         self.check_for_collisions()
         self.check_for_bombs_evaded()
         if self.character.is_dead():
-            return False
-        return True
+            self.is_over = True
 
     def drop_bombs(self):
         for bomb in self.bombs:
@@ -78,8 +79,6 @@ class GameModel:
             return False
 
         return bomb.bottom() >= self.character.top
-
-        return bomb.lane == self.character.lane
 
     def is_evaded(self, bomb: Bomb) -> bool:
         character_height_percent = 90
