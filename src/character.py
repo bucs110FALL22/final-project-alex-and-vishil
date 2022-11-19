@@ -15,7 +15,14 @@ class MainCharacter():
         self.image = 'character'
         self.num_of_lanes = num_of_lanes
         self.lane = num_of_lanes / 2
+        self.height = 15
+        self.top = 100 - self.height
         self.visible = True
+        self.lives = 3
+        self.score = 0
+
+    def is_dead(self) -> bool:
+        return self.lives <= 0
 
     def increase_health(self, delta: int = 1):
         '''

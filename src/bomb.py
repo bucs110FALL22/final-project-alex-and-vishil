@@ -21,13 +21,27 @@ class Bomb:
         self.image = 'bomb'
         self.num_of_lanes = num_of_lanes
         self.lane = lane
-        self.height = 0
+        self.top = 0
+        self.height = 100 / self.num_of_lanes
         self.speed = speed
         self.damage = damage
+        self.visible = True
+        self.exploded = False
         self.score_value = score_value
+
+    def reset(self):
+        self.visible = True
+        self.exploded = False
 
     def drop(self):
         '''
         Updates the position of the bomb vertically according to the speed
         '''
-        self.height = (self.height + self.speed) % 100
+        full_height = 100
+        new_height = self.top + self.speed
+        if new_height >= full_height:
+            self.reset()
+        self.top = new_height % full_height
+
+    def bottom(self):
+        return self.top + self.height

@@ -1,16 +1,17 @@
 import pygame
 
+from src.game_model import GameModel
+
 
 class GameController:
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self, game_model: GameModel) -> None:
+        self.game_model = game_model
 
     def handle_game_events(self, event):
         if event.type != pygame.KEYDOWN:
             return
         if event.key in [pygame.K_a, pygame.K_LEFT]:
-            self.character.move_left()
+            self.game_model.move_character_left()
         elif event.key in [pygame.K_d, pygame.K_RIGHT]:
-            self.character.move_right()
-
+            self.game_model.move_character_right()
