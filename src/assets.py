@@ -1,4 +1,7 @@
 class Assets:
+    '''
+    Maps assets name to asset files
+    '''
     images = {
         'character': 'assets/character.png',
         'background': './assets/space-background.png',

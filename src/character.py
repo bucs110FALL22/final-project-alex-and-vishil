@@ -3,14 +3,10 @@ class MainCharacter():
     Screen object representing the main game character.
     '''
 
-    def __init__(self, num_of_lanes: int = 0) -> None:
+    def __init__(self, num_of_lanes: int) -> None:
         '''
         constructor
-        image: (str) file name for the character image
-        rect: (str) character's rectangle in the display
-        health: (int) number of lives or strength the character has
-        powerups: (float) factor of score increase
-        lane: (int) vertical lane where the character appears
+        num_of_lanes: (int) number of lanes in the game. Used to position the character in the logical gameboard.
         '''
         self.image = 'character'
         self.num_of_lanes = num_of_lanes
@@ -20,6 +16,12 @@ class MainCharacter():
         self.visible = True
         self.lives = 3
 
+    def loose_life(self):
+        '''
+        Decreases the number of lives by one.
+        '''
+        self.lives -= 1
+    
     def is_dead(self) -> bool:
         '''
         Checks if the character is still alive

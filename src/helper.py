@@ -2,13 +2,20 @@ import pygame
 
 
 class Helper:
+    '''
+    Helper class to display text on the screen.
+    '''
 
-    def text_objects(text, font):
-        textSurface = font.render(text, True, 'white')
-        return textSurface, textSurface.get_rect()
-
-    def print(surface, text, size, center):
-        largeText = pygame.font.Font('freesansbold.ttf', size)
-        TextSurf, TextRect = Helper.text_objects(text, largeText)
+    def print(surface, text: str, size: int, center):
+        '''
+        Displays centered text on the input coordinates.
+        surface: (Surface) pygame surface to print on.
+        text: (str) text to print
+        size: (int) font size
+        center: (Point) coordinates to display at
+        '''
+        font = pygame.font.Font('freesansbold.ttf', size)
+        TextSurf = font.render(text, True, 'white')
+        TextRect = TextSurf.get_rect()
         TextRect.center = center
         surface.blit(TextSurf, TextRect)
