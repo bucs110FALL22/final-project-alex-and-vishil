@@ -1,21 +1,23 @@
-class Bomb:
+class FallingObject:
     '''
-    Screen object representing a lethal bomb that reduced the number of character lifes and has a score value that corresponds to the score increase when the character avoids it.
+    Screen object representing a falling object that affects the character lifes, game score, game speed, etc.
     '''
 
     def __init__(self,
+                 type: str = 'bomb',
                  speed: float = 1,
                  lane: int = 0,
                  log_height: float = 15,
                  score_value: int = 0) -> None:
         '''
         constructor
-        speed: (float) Vertical speed at which the bomb drops
-        lane: (int) vertical lane where the bomb moves down.
-        log_height: (int) bomb height as percent of the game vertical area.
-        score_value: (int) score increase gained by avoiding the bomb
+        type: (str) Falling object type. Available types are 'bomb' and 'life'
+        speed: (float) Vertical speed at which the falling object drops
+        lane: (int) vertical lane where the falling object moves down.
+        log_height: (int) falling object height as percent of the game vertical area.
+        score_value: (int) score increase gained by avoiding the falling object
         '''
-        self.image = 'bomb'
+        self.type = type
         self.lane = lane
         self.log_depth = 0  # depth as percent of the game vertical area.
         self.log_height = log_height
@@ -23,16 +25,22 @@ class Bomb:
         self.set_state_active()
         self.score_value = score_value
 
+    def get_image_name(self) -> str:
+        '''
+        return: (str) the image name
+        '''
+        return self.image
+
     def reset(self):
         '''
-        Restores the bomb data.
+        Restores the falling object data.
         '''
         self.log_depth = 0
         self.set_state_active()
 
     def drop(self):
         '''
-        Updates the position of the bomb vertically according to the speed
+        Updates the position of the falling object vertically according to the speed
         '''
         full_height = 100
         new_height = self.log_depth + self.speed
@@ -42,17 +50,10 @@ class Bomb:
 
     def bottom(self) -> float:
         '''
-        Returns the logical vertical coordinate of the bottom of the bomb
+        Returns the logical vertical coordinate of the bottom of the falling object
         return: (float) logical vertical coordinates
         '''
         return self.log_depth + self.log_height
-
-    def is_visible(self) -> bool:
-        '''
-        Is the bomb visible
-        return: (bool) True if the bomb is visible
-        '''
-        return self.visible
 
     def set_state_active(self):
         '''
@@ -92,3 +93,15 @@ class Bomb:
         return: (bool) True if the bomb state is target_hit.
         '''
         return self.state == 'target_hit'
+
+    def is_bomb(self) -> bool:
+        '''
+        return: (bool) True if the object type is a bomb
+        '''
+        return self.type == 'bomb'
+
+    def is_life(self) -> bool:
+        '''
+        return: (bool) True if the object type is a life
+        '''
+        return self.type == 'life'

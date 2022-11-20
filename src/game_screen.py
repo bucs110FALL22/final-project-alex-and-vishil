@@ -1,4 +1,4 @@
-from src.bomb import Bomb
+from src.falling_object import FallingObject
 from src.scoreboard import Scoreboard
 from src.image import Image
 from src.display import Display
@@ -23,7 +23,8 @@ class GameScreen:
         self.game_model = game_model
         self.scoreboard = Scoreboard(display, game_model)
         self.init_character_image()
-        self.init_bomb_image()
+        self.init_obj_image()
+        self.init_life_image()
 
     def draw(self):
         '''
@@ -31,7 +32,7 @@ class GameScreen:
         '''
         self.draw_scoreboard()
         self.draw_character()
-        self.draw_bombs()
+        self.draw_falling_objects()
 
     def init_character_image(self):
         '''
@@ -42,14 +43,23 @@ class GameScreen:
         image_file = Assets.images.get('character')
         self.character_image = Image(image_file, width, height)
 
-    def init_bomb_image(self):
+    def init_obj_image(self):
         '''
-        Initializes the bombs image
+        Initializes the bomb image
         '''
         width = self.display.lane_width
         height = self.display.lane_width
         image_file = Assets.images.get('bomb')
         self.bomb_image = Image(image_file, width, height)
+
+    def init_life_image(self):
+        '''
+        Initializes the life objects image
+        '''
+        width = self.display.lane_width
+        height = self.display.lane_width
+        image_file = Assets.images.get('life')
+        self.life_image = Image(image_file, width, height)
 
     def draw_character(self):
         '''
@@ -61,74 +71,80 @@ class GameScreen:
         self.character_image.draw(self.display.surface, x_character,
                                   y_character)
 
-    def draw_bombs(self):
+    def draw_falling_objects(self):
         '''
-        Draws all the bombs on the screen.
+        Draws all the falling objects on the screen.
         '''
-        for bomb in self.game_model.bombs:
-            self.draw_bomb(bomb)
+        for obj in self.game_model.falling_objects:
+            self.draw_falling_object(obj)
 
-    def draw_bomb(self, bomb: Bomb):
+    def draw_falling_object(self, obj: FallingObject):
         '''
         Draws a bomb on the screen.
-        bomb: (Bomb) bomb to draw.
+        obj: (FallingObject) bomb to draw.
         '''
-        if bomb.is_state_active():
-            self.draw_bomb_unexploted(bomb)
+        if obj.is_state_active():
+            self.draw_object_unexploted(obj)
             return
 
-        if bomb.is_state_evaded():
-            self.draw_bomb_value(bomb)
+        if obj.is_state_evaded():
+            self.draw_object_value(obj)
             return
 
-        if bomb.is_state_target_hit():
-            self.draw_bomb_exploded(bomb)
+        if obj.is_state_target_hit():
+            self.draw_object_exploded(obj)
             return
 
-    def draw_bomb_unexploted(self, bomb):
+    def draw_object_unexploted(self, obj: FallingObject):
         '''
         Draws a bomb in an unexploted state.
-        bomb: (Bomb) bomb to draw.
+        obj: (FallingObject) bomb to draw.
         '''
         surface = self.display.surface
-        x_bomb, y_bomb = self.get_bomb_screen_pos(bomb)
-        self.bomb_image.draw(surface, x_bomb, y_bomb)
+        x_obj, y_obj = self.get_obj_screen_pos(obj)
+        if obj.type == 'bomb':
+            self.bomb_image.draw(surface, x_obj, y_obj)
+        elif obj.type == 'life':
+            self.life_image.draw(surface, x_obj, y_obj)
 
-    def draw_bomb_value(self, bomb):
+    def draw_object_value(self, obj: FallingObject):
         '''
         Draws the bomb in exploded state. We currently display the score value of the item.
-        bomb: (Bomb) bomb to draw.
+        obj: (FallingObject) bomb to draw.
         '''
         surface = self.display.surface
-        x_bomb, y_bomb = self.get_bomb_screen_pos(bomb)
-        x_text = x_bomb + self.display.lane_width / 2
-        y_text = y_bomb
-        text = str(bomb.score_value)
+        x_obj, y_obj = self.get_obj_screen_pos(obj)
+        x_text = x_obj + self.display.lane_width / 2
+        y_text = y_obj
+        text = str(obj.score_value)
         font_size = 40
         Helper.print(surface, text, font_size, (x_text, y_text))
 
-    def draw_bomb_exploded(self, bomb):
+    def draw_object_exploded(self, obj: FallingObject):
         '''
         Draws the bomb in exploded state. We currently display the score value of the item.
-        bomb: (Bomb) bomb to draw.
+        obj: (FallingObject) bomb to draw.
         '''
         surface = self.display.surface
-        x_bomb, y_bomb = self.get_bomb_screen_pos(bomb)
-        x_text = x_bomb + self.display.lane_width / 2
-        y_text = y_bomb
-        text = 'BOOM!'
+        x_obj, y_obj = self.get_obj_screen_pos(obj)
+        x_text = x_obj + self.display.lane_width / 2
+        y_text = y_obj
+        if obj.type == 'bomb':
+            text = 'BOOM!'
+        elif obj.type == 'life':
+            text = 'Yeah!!!'
         font_size = 40
         Helper.print(surface, text, font_size, (x_text, y_text))
 
-    def get_bomb_screen_pos(self, bomb):
+    def get_obj_screen_pos(self, obj: FallingObject):
         '''
-        Calculates the screen position of the bomb by translating the logical units to pixels.
-        bomb: (Bomb) bomb to draw.
+        Calculates the screen position of the object by translating the logical units to pixels.
+        obj: (FallingObject) bomb to draw.
         return: (tuple) Bomb coordinates in pixels
         '''
-        x_bomb = bomb.lane * self.display.lane_width
-        y_bomb = bomb.log_depth * self.display.height / 100
-        return x_bomb, y_bomb
+        x_obj = obj.lane * self.display.lane_width
+        y_obj = obj.log_depth * self.display.height / 100
+        return x_obj, y_obj
 
     def draw_scoreboard(self):
         '''

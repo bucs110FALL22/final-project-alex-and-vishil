@@ -11,22 +11,36 @@ class Scoreboard():
     '''
 
     def __init__(self, display: Display, game_model: GameModel) -> None:
+        '''
+        constructor
+        display: (Display) object containing the display information.
+        game_model: (GameModel) model/data/state of the game
+        '''
         self.display = display
         self.game_model = game_model
         self.init_health_image()
 
     def init_health_image(self):
+        '''
+        Initialize the life image
+        '''
         width = self.display.lane_width / 2
         height = self.display.lane_width / 2
         image_file = Assets.images.get('health')
         self.health_image = Image(image_file, width, height)
 
     def draw(self):
+        '''
+        Draws the scoreboard
+        '''
         self.draw_health()
         self.draw_score()
         self.draw_max_score()
 
     def draw_health(self):
+        '''
+        Draws the health meter in the scoreboard
+        '''
         health = self.game_model.character.lives
         margin = self.display.lane_width / 2
         for live in range(health):
@@ -35,6 +49,9 @@ class Scoreboard():
             self.health_image.draw(self.display.surface, x_health, y_health)
 
     def draw_score(self):
+        '''
+        Draws the score in the scoreboard
+        '''
         score = self.game_model.score
         margin = self.display.lane_width / 2
         x_score = self.display.width / 2
@@ -43,6 +60,9 @@ class Scoreboard():
         Helper.print(self.display.surface, text_score, 30, (x_score, y_score))
 
     def draw_max_score(self):
+        '''
+        Draws the max score in the scoreboard
+        '''
         max_score = self.game_model.max_score
         margin = self.display.lane_width / 2
         x_score = self.display.width - 3 * margin

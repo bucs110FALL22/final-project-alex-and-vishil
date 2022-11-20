@@ -1,6 +1,5 @@
 import random
-from src.logger import Logger
-from src.bomb import Bomb
+from src.falling_object import FallingObject
 from src.character import MainCharacter
 
 
@@ -18,6 +17,7 @@ class GameModel:
         self.score = 0
         self.max_score = 0
         self.is_over = False
+        self.falling_objects: FallingObject[0] = []
         self.start_game()
 
     def start_game(self):
@@ -27,7 +27,7 @@ class GameModel:
         self.grab_max_score()
         self.reset_score()
         self.init_character()
-        self.init_bombs()
+        self.init_falling_objects()
 
     def grab_max_score(self):
         '''
@@ -48,30 +48,51 @@ class GameModel:
         '''
         self.character = MainCharacter(self.num_of_lanes)
 
-    def init_bombs(self):
+    def init_falling_objects(self):
         '''
-        Initializes the falling bombs
+        Initializes the falling objects
         '''
-        self.bombs: list[Bomb] = []
+        self.falling_objects: list[FallingObject] = []
+        self.add_bomb_objects()
+        self.add_life_objects()
+
+    def add_life_objects(self):
+        '''
+        Adds 'life' falling objects to the list of falling objects
+        '''
+        num_of_life_objects = 2
+        for i in range(num_of_life_objects):
+            i_lane = random.randint(0, self.num_of_lanes)
+            obj = self.create_falling_object(i_lane, type='life')
+            self.falling_objects.append(obj)
+
+    def add_bomb_objects(self):
         for i_lane in range(self.num_of_lanes):
-            min_speed = 5
-            max_speed = 15
-            falling_speed = random.randint(min_speed, max_speed) / 100
-            value = int(falling_speed * 4 * 100)
-            logical_height = 100 / self.num_of_lanes
-            bomb = Bomb(speed=falling_speed,
-                        lane=i_lane,
-                        log_height=logical_height,
-                        score_value=value)
-            self.bombs.append(bomb)
+            obj = self.create_falling_object(i_lane, type='bomb')
+            self.falling_objects.append(obj)
+        return i_lane
+
+    def create_falling_object(self, i_lane, type='bomb') -> FallingObject:
+        min_speed = 5
+        max_speed = 15
+        falling_speed = random.randint(min_speed, max_speed) / 100
+        value = int(falling_speed * 4 * 100)
+        logical_height = 100 / self.num_of_lanes
+        obj = FallingObject(type=type,
+                            speed=falling_speed,
+                            lane=i_lane,
+                            log_height=logical_height,
+                            score_value=value)
+
+        return obj
 
     def update_data(self):
         '''
         Model Update - called to advance the game. Updates the model on each call.
         '''
-        self.drop_bombs()
+        self.drop_falling_objects()
         self.check_for_collisions()
-        self.check_for_bombs_evaded()
+        self.check_for_falling_objects_evaded()
         if self.character.is_dead():
             self.end_game()
 
@@ -81,12 +102,12 @@ class GameModel:
         '''
         self.is_over = True
 
-    def drop_bombs(self):
+    def drop_falling_objects(self):
         '''
-        Uopdates the bombs models to simulate falling
+        Uopdates the falling objects models to simulate falling
         '''
-        for bomb in self.bombs:
-            bomb.drop()
+        for obj in self.falling_objects:
+            obj.drop()
 
     def move_character_left(self):
         '''
@@ -102,50 +123,57 @@ class GameModel:
 
     def check_for_collisions(self):
         '''
-        Dectecs collisions between the character and the falling objects like bombs
+        Dectecs collisions between the character and the falling objects like falling objects
         '''
-        for bomb in self.bombs:
-            if self.is_hit(bomb):
-                bomb.set_state_target_hit()
-                self.character.loose_life()
+        for obj in self.falling_objects:
+            if self.is_hit(obj):
+                obj.set_state_target_hit()
+                if obj.is_bomb():
+                    self.character.loose_life()
+                elif obj.is_life():
+                    self.character.add_life()
+                    obj.lane = random.randint(0, self.num_of_lanes)
 
-    def check_for_bombs_evaded(self):
+    def check_for_falling_objects_evaded(self):
         '''
-        Checks for bombs that reached the bottom and did not hit the character. 
+        Checks for falling objects that reached the bottom and did not hit the character. 
         Increases the game score accordingly.
         '''
-        for bomb in self.bombs:
-            if self.is_evaded(bomb):
-                bomb.set_state_evaded()
-                self.score += bomb.score_value
+        for obj in self.falling_objects:
+            if self.is_evaded(obj):
+                obj.set_state_evaded()
+                if obj.is_bomb():
+                    self.score += obj.score_value
+                elif obj.is_life():
+                    obj.lane = random.randint(0, self.num_of_lanes)
 
-    def is_hit(self, bomb: Bomb) -> bool:
+    def is_hit(self, obj: FallingObject) -> bool:
         '''
-        Checks whether the input bomb hit the character.
-        bomb: (Bomb) Bomb to check for collision.
+        Checks whether the input falling object hit the character.
+        obj: (FallingObject) Falling object to check for collision.
         '''
-        if not bomb.is_state_active():
+        if not obj.is_state_active():
             return False
 
-        if bomb.lane != self.character.lane:
+        if obj.lane != self.character.lane:
             return False
 
-        bomb_bottom = bomb.bottom()
-        return bomb_bottom >= self.character.top
+        obj_bottom = obj.bottom()
+        return obj_bottom >= self.character.top
 
-    def is_evaded(self, bomb: Bomb) -> bool:
+    def is_evaded(self, obj: FallingObject) -> bool:
         '''
-        Checks whether the input bomb reachedd the bottom without hitting the character.
-        bomb: (Bomb) Bomb to check for collision.
-        return: (bool) True if the bomb was evaded
+        Checks whether the input falling object reachedd the bottom without hitting the character.
+        obj: (FallingObject) Falling object to check for collision.
+        return: (bool) True if the falling object was evaded
         '''
-        if not bomb.is_state_active():
+        if not obj.is_state_active():
             return False
 
         character_height_percent = 90
-        reached_bottom = bomb.log_depth >= character_height_percent
+        reached_bottom = obj.log_depth >= character_height_percent
 
         if not reached_bottom:
             return False
 
-        return bomb.lane != self.character.lane
+        return obj.lane != self.character.lane

@@ -16,12 +16,18 @@ class MainCharacter():
         self.visible = True
         self.lives = 3
 
+    def add_life(self):
+        '''
+        Increases the number of lives by one.
+        '''
+        self.lives += 1
+
     def loose_life(self):
         '''
         Decreases the number of lives by one.
         '''
         self.lives -= 1
-    
+
     def is_dead(self) -> bool:
         '''
         Checks if the character is still alive
