@@ -11,3 +11,9 @@ class Assets:
         'life': 'assets/extra-life.png',
         'slowdown': 'assets/turtle.png'
     }
+
+    sounds = {
+        'hit_sound': 'assets/button-10.wav',
+        'win_sound': 'assets/button-3.wav',
+        'backgroun_sound': 'assets/jungle-run-01.mp3'
+    }

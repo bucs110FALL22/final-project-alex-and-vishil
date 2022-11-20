@@ -18,6 +18,7 @@ class GameModel:
         self.max_score = 0
         self.is_over = False
         self.falling_objects: FallingObject[0] = []
+        FallingObject.num_of_lanes = num_of_lanes
         self.start_game()
 
     def start_game(self):
@@ -52,9 +53,17 @@ class GameModel:
         '''
         Initializes the falling objects
         '''
-        self.falling_objects: list[FallingObject] = []
+        self.falling_objects: list = []
         self.add_bomb_objects()
         self.add_life_objects()
+
+    def add_bomb_objects(self):
+        '''
+        Adds 'bombs' falling objects to the list of falling objects
+        '''
+        for i_lane in range(self.num_of_lanes):
+            obj = self.create_falling_object(type='bomb', i_lane=i_lane)
+            self.falling_objects.append(obj)
 
     def add_life_objects(self):
         '''
@@ -62,17 +71,20 @@ class GameModel:
         '''
         num_of_life_objects = 2
         for i in range(num_of_life_objects):
-            i_lane = random.randint(0, self.num_of_lanes)
-            obj = self.create_falling_object(i_lane, type='life')
+            obj = self.create_falling_object(type='life', use_random_lane=True)
             self.falling_objects.append(obj)
 
-    def add_bomb_objects(self):
-        for i_lane in range(self.num_of_lanes):
-            obj = self.create_falling_object(i_lane, type='bomb')
-            self.falling_objects.append(obj)
-        return i_lane
-
-    def create_falling_object(self, i_lane, type='bomb') -> FallingObject:
+    def create_falling_object(self,
+                              type: str = '',
+                              i_lane: int = 0,
+                              use_random_lane: bool = False) -> FallingObject:
+        '''
+        Createst a single falling object depeding on the type.
+        i_lane: (int) game lane to assign to the newly created object.
+        use_random_lane: (bool) True to ignore the provided lane and use a random one instead
+        type: (str) type of object being created.
+        return: (FallingObject) created object
+        '''
         min_speed = 5
         max_speed = 15
         falling_speed = random.randint(min_speed, max_speed) / 100
@@ -81,6 +93,7 @@ class GameModel:
         obj = FallingObject(type=type,
                             speed=falling_speed,
                             lane=i_lane,
+                            use_random_lane=use_random_lane,
                             log_height=logical_height,
                             score_value=value)
 
@@ -144,8 +157,6 @@ class GameModel:
                 obj.set_state_evaded()
                 if obj.is_bomb():
                     self.score += obj.score_value
-                elif obj.is_life():
-                    obj.lane = random.randint(0, self.num_of_lanes)
 
     def is_hit(self, obj: FallingObject) -> bool:
         '''

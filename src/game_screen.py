@@ -1,3 +1,4 @@
+from src.sound import Sound
 from src.falling_object import FallingObject
 from src.scoreboard import Scoreboard
 from src.image import Image
@@ -25,6 +26,8 @@ class GameScreen:
         self.init_character_image()
         self.init_obj_image()
         self.init_life_image()
+        self.init_win_sound()
+        self.init_hit_sound()
 
     def draw(self):
         '''
@@ -60,6 +63,18 @@ class GameScreen:
         height = self.display.lane_width
         image_file = Assets.images.get('life')
         self.life_image = Image(image_file, width, height)
+
+    def init_win_sound(self):
+        '''
+        Initializes the win sound
+        '''
+        self.win_sound = Sound(Assets.sounds.get('win_sound'))
+
+    def init_hit_sound(self):
+        '''
+        Initializes the win sound
+        '''
+        self.hit_sound = Sound(Assets.sounds.get('hit_sound'))
 
     def draw_character(self):
         '''
@@ -129,11 +144,18 @@ class GameScreen:
         x_obj, y_obj = self.get_obj_screen_pos(obj)
         x_text = x_obj + self.display.lane_width / 2
         y_text = y_obj
-        if obj.type == 'bomb':
+        if obj.is_bomb():
             text = 'BOOM!'
-        elif obj.type == 'life':
-            text = 'Yeah!!!'
-        font_size = 40
+            font_size = 40
+            if obj.is_just_hit():
+                obj.reset_just_hit()
+                self.hit_sound.beep()
+        if obj.is_life():
+            text = 'Life!'
+            font_size = 40
+            if obj.is_just_hit():
+                obj.reset_just_hit()
+                self.win_sound.beep()
         Helper.print(surface, text, font_size, (x_text, y_text))
 
     def get_obj_screen_pos(self, obj: FallingObject):

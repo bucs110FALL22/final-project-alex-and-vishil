@@ -40,11 +40,3 @@ class Display:
         Sets up the applicaton background.
         '''
         self.surface = pygame.display.set_mode((self.width, self.height))
-        self.background_image = Image(Assets.images.get('background'),
-                                      self.width, self.height)
-
-    def draw_background(self):
-        '''
-        Draws the application background
-        '''
-        self.background_image.draw(self.surface, 0, 0)

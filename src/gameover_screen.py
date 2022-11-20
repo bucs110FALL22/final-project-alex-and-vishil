@@ -38,6 +38,11 @@ class GameoverScreen:
         Helper.print(surface, text, font_size, (x_text, y_text))
 
         y_text += font_size
-        text = 'Q to quit'
-        font_size = 50
+        text = 'Press Q to quit'
+        font_size = 30
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+        y_text += font_size
+        text = 'Press S to toggle sound'
+        font_size = 30
         Helper.print(surface, text, font_size, (x_text, y_text))
