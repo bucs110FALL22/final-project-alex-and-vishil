@@ -102,10 +102,56 @@ The Project is broken down into the following file structure:
 
 * << Describe your testing strategy for your project. >>
 
-## ATP
+## ATP - Aceptance Test Procedure 
 
-| Step                 |Procedure             |Expected Results                   |
-|----------------------|:--------------------:|----------------------------------:|
-|  1                   | Run Counter Program  |GUI window appears with count = 0  |
-|  2                   | click count button   | display changes to count = 1      |
-etc...
+| Step | Procedure                                                           | Expected Result                                                                                        |
+| ---- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| 1    | Run the program                                                     | Application opens and welcome screen appears                                                           |
+| 2    | Welcome screen - no action needed                                   | Welcome screen Space background displays                                                               |
+| 3    | Welcome screen - no action needed                                   | Welcome screen shows static character image partially overlapping the title                            |
+| 4    | Welcome screen - no action needed                                   | Game name, credits, and basic instructions are displayed                                               |
+| 5    | Welcome screen - no action needed                                   | Background music is playing (locally not on Replit)                                                    |
+| 6    | Welcome screen - Press s key while music is off                     | Music starts (note - music does not work on Replit, only on local                                      |
+| 7    | Welcome screen - Press s while music is on                          | Music stops (note - music does not work on Replit, only on local                                       |
+| 8    | Welcome screen - Press q                                            | Applicaiton cleanly exits                                                                              |
+| 9    | Run the program to display the welcome screen                       | Application opens and welcome screen appears                                                           |
+| 10   | Welcome screen - Press Space bar                                    | Game starts, the game screen shows and object start falling from the top to the bottom                 |
+| 11   | Game - no actions needed                                            | Bombs come down on every lane at different (random) speeds                                             |
+| 12   | Game - no actions needed                                            | Two 'lives' (mushrooms) come down along with the bombs                                                 |
+| 13   | Game - no actions needed                                            | Character (Mario) displays at the bottom                                                               |
+| 14   | Game - no actions needed                                            | Space background remains                                                                               |
+| 15   | Game - Press Arrow Left                                             | Character moves to the left                                                                            |
+| 16   | Game - Press Arrow Right                                            | Character moves to the right                                                                           |
+| 17   | Game - Press Arrow Left multiple times                              | When character reaches the left border it reapears on the right side                                   |
+| 18   | Game - Press Arrow Right multiple times                             | When character reaches the Right border it reapears on the left side                                   |
+| 19   | Game - Falling Items                                                | When falling items reach the bottom they reappear at the top with new random speed                     |
+| 20   | Game - Falling mushrooms                                            | When falling mushrooms reach the bottom they reapear at the top in random lanes with new random speeds |
+| 21   | Game - character hits bomb                                          | Character loose one live - hearts in the scoreboard indicating the number of lives decrease            |
+| 22   | Game - character hits bomb                                          | A sound is played and the word "BOOM!" appears in place of the bomb                                    |
+| 23   | Game - toggle background music (press s key)                        | Sound of the character hitting a Bomb or a Mushroom still plays regardless of the music playing        |
+| 24   | Game - hit multiple bombs for number of lives to reach zero         | Lifes indicator on the scoreboard shows zero lives                                                     |
+| 25   | Game - character looses all lives                                   | Game over screen is displayed                                                                          |
+| 26   | Game - character hits Life (mushroom)                               | A sound is played and the word "Life!" appears in place of the bomb                                    |
+| 27   | Game - bomb reaches bottom                                          | The bomb score is displayed instead of the bomb                                                        |
+| 28   | Game - bomb reaches bottom                                          | The game score is increased by the value of the bomb                                                   |
+| 29   | Game - bomb reaches bottom                                          | The bomb reapears at the top of the screen with the same speed                                         |
+| 30   | Game - mushroom reaches bottom                                      | Mushroom reapears at the top in a new lane                                                             |
+| 31   | Game - Score Board - no action needed                               | Score board shows while game is on                                                                     |
+| 32   | Game - Score Board - Lives - game start                             | Score board shows 3 lives at the begining                                                              |
+| 33   | Game - Score Board - Lives - lives reach zero                       | Game ends and game over screen is displayed                                                            |
+| 34   | Game - Score Board - Play game                                      | Score updates in score board as unexploded bombs reach the bottom of the screen                        |
+| 35   | Game - Score Board - During first game                              | After intial run scoreboard Max Score shows 0                                                          |
+| 36   | Game - Score Board - Second and subsequent times the game is played | As new games are played while the app is runnin the max score is updated accordingly                   |
+| 37   | Game - Score Board - Close the app and re-run the game              | The max score is reset to zero when the application is re-started                                      |
+| 38   | Game - Press S when music is off                                    | Music starts (note - music does not work on Replit, only on local                                      |
+| 39   | Game - Press S when music is on                                     | Music stops (note - music does not work on Replit, only on local                                       |
+| 40   | Game - Press Q                                                      | Application exits                                                                                      |
+| 41   | Game - Press O                                                      | Game over screen is displayed                                                                          |
+| 42   | Game - Press O                                                      | Partial score does not count towards maximum score                                                     |
+| 43   | Game Over screen - no action needed                                 | Space background remains                                                                               |
+| 44   | Game Over screen - no action needed                                 | Game over text and key instructions are displayed                                                      |
+| 45   | Game Over - Press Space                                             | Restarts the game - Max score is updated acordingly                                                    |
+| 46   | Game Over - Press Q                                                 | Application exits                                                                                      |
+| 47   | Game Over screen - Press S when music is off                        | Music starts (note - music does not work on Replit, only on local                                      |
+| 48   | Game Over screen - Press S when music is on                         | Music stops (note - music does not work on Replit, only on local                                       |
+

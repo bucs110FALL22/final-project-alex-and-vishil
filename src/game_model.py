@@ -84,18 +84,10 @@ class GameModel:
         use_random_lane: (bool) True to ignore the provided lane and use a random one instead
         type: (str) type of object being created.
         return: (FallingObject) created object
-        '''
-        min_speed = 5
-        max_speed = 15
-        falling_speed = random.randint(min_speed, max_speed) / 100
-        value = int(falling_speed * 4 * 100)
-        logical_height = 100 / self.num_of_lanes
+        '''        
         obj = FallingObject(type=type,
-                            speed=falling_speed,
                             lane=i_lane,
-                            use_random_lane=use_random_lane,
-                            log_height=logical_height,
-                            score_value=value)
+                            use_random_lane=use_random_lane)
 
         return obj
 

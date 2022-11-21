@@ -9,45 +9,47 @@ class FallingObject:
 
     def __init__(self,
                  type: str = 'bomb',
-                 speed: float = 1,
                  lane: int = 0,
-                 use_random_lane: bool = False,
-                 log_height: float = 15,
-                 score_value: int = 0) -> None:
+                 use_random_lane: bool = False) -> None:
         '''
         constructor
         type: (str) Falling object type. Available types are 'bomb' and 'life'
-        speed: (float) Vertical speed at which the falling object drops
         lane: (int) vertical lane where the falling object moves down.
         use_random_lane: (bool) whether to use hte lane input or use a random lane number
-        log_height: (int) falling object height as percent of the game vertical area.
-        score_value: (int) score increase gained by avoiding the falling object
         '''
         self.type = type
         self.lane = lane
         self.use_random_lane = use_random_lane
         self.log_depth = 0  # depth as percent of the game vertical area.
-        self.log_height = log_height
-        self.speed = speed
+        self.calc_object_height = self.calc_object_height()
+        self.speed = 0
         self.set_state_active()
-        self.score_value = score_value
+        self.score_value = 0
         self.just_hit = False  # True right after it hits target, reset to False on next update
         self.reset()
-
-    def get_image_name(self) -> str:
-        '''
-        return: (str) the image name
-        '''
-        return self.image
 
     def reset(self):
         '''
         Restores the falling object data.
         '''
         self.log_depth = 0
+        self.if_needed_set_random_lane()
+        self.set_random_speed() 
+        self.set_score_value()   
+        self.set_state_active()
+
+    def if_needed_set_random_lane(self):
+        '''
+        Sets the lane randomly if the use_random_lane is set
+        '''
         if self.use_random_lane:
             self.lane = self.get_random_lane()
-        self.set_state_active()
+
+    def get_image_name(self) -> str:
+        '''
+        return: (str) the image name
+        '''
+        return self.image
 
     def drop(self):
         '''
@@ -64,7 +66,7 @@ class FallingObject:
         Returns the logical vertical coordinate of the bottom of the falling object
         return: (float) logical vertical coordinates
         '''
-        return self.log_depth + self.log_height
+        return self.log_depth + self.calc_object_height
 
     def set_state_active(self):
         '''
@@ -135,3 +137,28 @@ class FallingObject:
         return: (int) random number between 0 and the number of game lanes.
         '''
         return random.randint(0, FallingObject.num_of_lanes)
+
+    def set_random_speed(self):
+        '''
+        Sets the object falling speed (randomly).
+        '''
+        min_speed = 5
+        max_speed = 15
+        falling_speed = random.randint(min_speed, max_speed) / 100
+        self.speed = falling_speed
+
+    def set_score_value(self, speed: float = 0):
+        '''
+        Converts the speed into a score value for the object
+        '''
+        full_height = 100
+        factor = 4
+        score_value = int(self.speed * factor * full_height)
+        self.score_value = score_value
+
+    def calc_object_height(self) -> float:
+        '''
+        calculates the object height in logical units
+        '''
+        full_height = 100
+        return full_height / self.num_of_lanes
