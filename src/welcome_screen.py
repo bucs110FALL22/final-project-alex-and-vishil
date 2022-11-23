@@ -62,19 +62,34 @@ class WelcomeScreen:
         '''
         surface = self.display.surface
         x_text = self.display.width / 2
-        y_text = self.display.height - 120
+        y_text = self.display.height - 140
 
-        text = 'Instructions: Bombs kill you and mushrooms keep you alive!'
+        text = 'Instructions: Bombs kill you :()'
         font_size = 20
         Helper.print(surface, text, font_size, (x_text, y_text))
 
         y_text += font_size
-        text = 'Every bomb gives you points. Turtles slow the game down'
+        text = 'Mushrooms keep you alive and give you a rush!'
         font_size = 20
         Helper.print(surface, text, font_size, (x_text, y_text))
 
         y_text += font_size
-        text = 'Press G for Grid (debug). S to toggle music. Q to Quit'
+        text = 'Every evaded bomb gives you points'
+        font_size = 20
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+        y_text += font_size
+        text = 'S to toggle music'
+        font_size = 20
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+        y_text += font_size
+        text = 'R to reset the max score'
+        font_size = 20
+        Helper.print(surface, text, font_size, (x_text, y_text))
+
+        y_text += font_size
+        text = 'Q to Quit'
         font_size = 20
         Helper.print(surface, text, font_size, (x_text, y_text))
 

@@ -150,13 +150,16 @@ class GameScreen:
             if obj.is_just_hit():
                 obj.reset_just_hit()
                 self.hit_sound.beep()
+            Helper.print(surface, text, font_size, (x_text, y_text))
+
         if obj.is_life():
             text = 'Life!'
             font_size = 40
             if obj.is_just_hit():
                 obj.reset_just_hit()
                 self.win_sound.beep()
-        Helper.print(surface, text, font_size, (x_text, y_text))
+            Helper.print(surface, text, font_size,
+                         (self.display.width / 2, self.display.height / 2))
 
     def get_obj_screen_pos(self, obj: FallingObject):
         '''

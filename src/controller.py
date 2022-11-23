@@ -20,6 +20,9 @@ class Controller:
     '''
 
     def __init__(self):
+        '''
+        constructor
+        '''
         display = self.init_pygame()
         self.background = Background(display)
         self.welcome_screen = WelcomeScreen(display)
@@ -85,6 +88,8 @@ class Controller:
             return
         if event.key in [pygame.K_s]:
             self.background.toggle_sound()
+        if event.key in [pygame.K_r]:
+            self.game.game_model.reset_max_score()
         if event.key in [pygame.K_g]:
             Logger.is_debug = not Logger.is_debug
         if event.key in [pygame.K_q]:
@@ -178,7 +183,7 @@ class Controller:
         '''
         self.game.update_data()
         if self.game.is_over():
-            self.set_gameover_state()
+            self.end_game()
 
     def game_redraw(self):
         '''

@@ -52,18 +52,27 @@ class Scoreboard():
         '''
         Draws the score in the scoreboard
         '''
-        score = self.game_model.score
+        score = self.game_model.get_score()
+        font_size = 30
         margin = self.display.lane_width / 2
         x_score = self.display.width / 2
-        y_score = margin
+        y_text = margin
         text_score = 'Score: ' + str(score)
-        Helper.print(self.display.surface, text_score, 30, (x_score, y_score))
+        Helper.print(self.display.surface, text_score, font_size,
+                     (x_score, y_text))
+
+        speed = self.game_model.game_speed_factor
+        text_speed = 'speed: ' + str(speed)
+        y_text += font_size
+        font_size = 25
+        Helper.print(self.display.surface, text_speed, font_size,
+                     (x_score, y_text))
 
     def draw_max_score(self):
         '''
         Draws the max score in the scoreboard
         '''
-        max_score = self.game_model.max_score
+        max_score = self.game_model._max_score
         margin = self.display.lane_width / 2
         x_score = self.display.width - 3 * margin
         y_score = margin

@@ -1,6 +1,12 @@
+import math
 import random
+from src.storage import Storage
 from src.falling_object import FallingObject
 from src.character import MainCharacter
+
+GAME_STORAGE_FILE_NAME = 'mario_storage.txt'
+MAX_SCORE_LABEL = 'game_max_score'
+SPEED_DELTA = 1.3
 
 
 class GameModel:
@@ -13,9 +19,11 @@ class GameModel:
         constructor
         num_of_lanes: (int) number of lanes in the game. Used to calculate object sizes and positions.
         '''
+        self.storage = Storage(GAME_STORAGE_FILE_NAME)
+        self.load_max_score()
         self.num_of_lanes = num_of_lanes
         self.score = 0
-        self.max_score = 0
+        self.game_speed_factor = 1
         self.is_over = False
         self.falling_objects: FallingObject[0] = []
         FallingObject.num_of_lanes = num_of_lanes
@@ -26,7 +34,7 @@ class GameModel:
         Starts the game - resets the state for a new round.
         '''
         self.grab_max_score()
-        self.reset_score()
+        self.reset_score_etc()
         self.init_character()
         self.init_falling_objects()
 
@@ -34,13 +42,14 @@ class GameModel:
         '''
         Sets max score since the game was instantiated.
         '''
-        self.max_score = max(self.score, self.max_score)
+        self.set_max_score(self.score)
 
-    def reset_score(self):
+    def reset_score_etc(self):
         '''
         Resets the score and 
         '''
         self.is_over = False
+        self.game_speed_factor = 1
         self.score = 0
 
     def init_character(self):
@@ -84,7 +93,7 @@ class GameModel:
         use_random_lane: (bool) True to ignore the provided lane and use a random one instead
         type: (str) type of object being created.
         return: (FallingObject) created object
-        '''        
+        '''
         obj = FallingObject(type=type,
                             lane=i_lane,
                             use_random_lane=use_random_lane)
@@ -112,7 +121,7 @@ class GameModel:
         Uopdates the falling objects models to simulate falling
         '''
         for obj in self.falling_objects:
-            obj.drop()
+            obj.drop(self.game_speed_factor)
 
     def move_character_left(self):
         '''
@@ -137,6 +146,7 @@ class GameModel:
                     self.character.loose_life()
                 elif obj.is_life():
                     self.character.add_life()
+                    self.increase_speed()
                     obj.lane = random.randint(0, self.num_of_lanes)
 
     def check_for_falling_objects_evaded(self):
@@ -148,7 +158,7 @@ class GameModel:
             if self.is_evaded(obj):
                 obj.set_state_evaded()
                 if obj.is_bomb():
-                    self.score += obj.score_value
+                    self.increase_score(obj.score_value)
 
     def is_hit(self, obj: FallingObject) -> bool:
         '''
@@ -180,3 +190,53 @@ class GameModel:
             return False
 
         return obj.lane != self.character.lane
+
+    def load_max_score(self):
+        '''
+        Loads the maximum score from the storage file
+        '''
+        self._max_score = self.storage.load(MAX_SCORE_LABEL)
+
+    def get_max_score(self) -> int:
+        '''
+        return: (int) the current maximum score
+        '''
+        return self._max_score
+
+    def set_max_score(self, new_max_score: int):
+        '''
+        Sets the current maximum score
+        '''
+        if new_max_score > self._max_score:
+            self._max_score = max(new_max_score, self._max_score)
+            self.storage.save(MAX_SCORE_LABEL, self._max_score)
+
+    def reset_max_score(self):
+        '''
+        Forces the max score to zero. Used maily for testing.
+        '''
+        self._max_score = 0
+        self.storage.save(MAX_SCORE_LABEL, self._max_score)
+
+    def get_score(self) -> int:
+        '''
+        return: (int) the current score
+        '''
+        return self.score
+
+    def increase_score(self, score_delta: int):
+        '''
+        Increases the game score by the input delta
+        score_delta: (int) amoutn of score increase.
+        '''
+        self.score += score_delta
+        self.set_max_score(self.score)
+
+    def increase_speed(self):
+        '''
+        Increases the factor used to control the speed of the falling object.
+        '''
+        new_game_speed_factor = self.game_speed_factor * SPEED_DELTA
+        one_digit_rounding = 1
+        self.game_speed_factor = round(new_game_speed_factor,
+                                       one_digit_rounding)

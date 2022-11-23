@@ -11,8 +11,9 @@ class MainCharacter():
         self.image = 'character'
         self.num_of_lanes = num_of_lanes
         self.lane = num_of_lanes / 2
-        self.height = 15
-        self.top = 100 - self.height
+        self.height = 15  # relative out of 100
+        full_height = 100  # logical coords
+        self.top = full_height - self.height
         self.visible = True
         self.lives = 3
 

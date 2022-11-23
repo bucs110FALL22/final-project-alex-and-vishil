@@ -34,8 +34,8 @@ class FallingObject:
         '''
         self.log_depth = 0
         self.if_needed_set_random_lane()
-        self.set_random_speed() 
-        self.set_score_value()   
+        self.set_random_speed()
+        self.set_score_value()
         self.set_state_active()
 
     def if_needed_set_random_lane(self):
@@ -51,12 +51,13 @@ class FallingObject:
         '''
         return self.image
 
-    def drop(self):
+    def drop(self, speed_factor: float = 1):
         '''
         Updates the position of the falling object vertically according to the speed
+        speed_factor: (float) Factor used to multiply the speed of the falling object
         '''
         full_height = 100
-        new_height = self.log_depth + self.speed
+        new_height = self.log_depth + self.speed * speed_factor
         if new_height >= full_height:
             self.reset()
         self.log_depth = new_height % full_height
@@ -136,7 +137,7 @@ class FallingObject:
         '''
         return: (int) random number between 0 and the number of game lanes.
         '''
-        return random.randint(0, FallingObject.num_of_lanes)
+        return random.randint(0, FallingObject.num_of_lanes - 1)
 
     def set_random_speed(self):
         '''

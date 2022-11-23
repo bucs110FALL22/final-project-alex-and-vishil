@@ -1,5 +1,4 @@
-:warning: Everything between << >> needs to be replaced (remove << >> after replacing)
-# CS110 Project Proposal
+# CS110 Final Project Proposal
 # Mario Bomber
 ## CS 110 Final Project
 ### Fall 2022
@@ -23,27 +22,35 @@ A game where bombs and other items rain down from the sky and the character has 
 ### Requirements:
 
 #### Must Have
-* Character moves horizontally with keyboad
-* At least one type of item rains down.
-* Item kills character on collision.
-* Game restart
-* Game quit
+* Character moves horizontally with keyboad :white_check_mark:
+* At least one type of item rains down. :white_check_mark:
+* Item kills character on collision. :white_check_mark:
+* Game restart :white_check_mark:
+* Game quit :white_check_mark:
 
 #### Nice to Have
-* Lives are counted 
-* Game over on loosing all lives
-* Scoring sytem
-* Prize items
-* Sound effects
-* Background soundtrack
+* Lives are counted :white_check_mark:
+* Game over on loosing all lives :white_check_mark:
+* Scoring sytem :white_check_mark:
+* Prize items :white_check_mark:
+* Sound effects :white_check_mark:
+* Background soundtrack :white_check_mark:
 
 #### Dream
 Different Levels
 * Character choice.
-* Score board
+* Score board :white_check_mark:
 * Variety of power ups with different effects
 * Boss fight - skill challenge to pass on levels
 * Multiplayer
+
+#### Additional Requirements
+Requirements added after proposal
+* Welcome screen  :white_check_mark:
+* Game over screen :white_check_mark:
+* Max score :white_check_mark:
+
+:white_check_mark: Represents  fullfilled requirements
 
 ***    
 
