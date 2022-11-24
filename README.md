@@ -60,15 +60,15 @@ Requirements added after proposal
 
 - **Initial Concept**
 
-  - **Welcome Screen:**![Welcome Screen](etc/alexvishil_welcome_screen.png)
-  - **Game Screen:**![Game Screen](etc/alexvishil_game_screen.png)
-  - **Game Over Screen:**![Game Over Screen](etc/alexvishil_gameover_screen.png)
+  - **Initial Welcome Screen:**![Welcome Screen](etc/alexvishil_welcome_screen.png)
+  - **Initial Game Screen:**![Game Screen](etc/alexvishil_game_screen.png)
+  - **Initial Game Over Screen:**![Game Over Screen](etc/alexvishil_gameover_screen.png)
     
     
 - **Final GUI**
-  - **Welcome Screen:**![Welcome Screen](etc/alexvishil_welcome_screen.png)
-  - **Game Screen:**![Game Screen](etc/alexvishil_game_screen.png)
-  - **Game Over Screen:**![Game Over Screen](etc/alexvishil_gameover_screen.png)
+  - **Final Welcome Screen:**![Welcome Screen](etc/final_welcome_screen.png)
+  - **Final Game Screen:**![Game Screen](etc/final_game_screen.png)
+  - **Final Game Over Screen:**![Game Over Screen](etc/final_gameover_screen.png)
 
 ***        
 
