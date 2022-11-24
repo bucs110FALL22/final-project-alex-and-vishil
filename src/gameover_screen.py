@@ -33,7 +33,7 @@ class GameoverScreen:
         Helper.print(surface, text, font_size, (x_text, y_text))
 
         y_text += font_size
-        text = 'Press SPACE to start'
+        text = 'Press SPACE to restart'
         font_size = 50
         Helper.print(surface, text, font_size, (x_text, y_text))
 

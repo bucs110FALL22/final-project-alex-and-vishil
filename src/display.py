@@ -1,7 +1,5 @@
 import os
 import pygame
-from src.assets import Assets
-from src.image import Image
 
 
 class Display:

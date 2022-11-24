@@ -25,7 +25,8 @@ class Sound:
         '''
         Plays the sound continously until stop() is called
         '''
-        pygame.mixer.Sound.play(self.sound)
+        non_stop = -1
+        pygame.mixer.Sound.play(self.sound, loops=non_stop)
 
     def stop(self):
         '''

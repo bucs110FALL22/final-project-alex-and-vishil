@@ -79,7 +79,7 @@ class WelcomeScreen:
         Helper.print(surface, text, font_size, (x_text, y_text))
 
         y_text += font_size
-        text = 'S to toggle music'
+        text = 'S to control music'
         font_size = 20
         Helper.print(surface, text, font_size, (x_text, y_text))
 

@@ -1,4 +1,3 @@
-import math
 import random
 from src.storage import Storage
 from src.falling_object import FallingObject
@@ -208,7 +207,7 @@ class GameModel:
         Sets the current maximum score
         '''
         if new_max_score > self._max_score:
-            self._max_score = max(new_max_score, self._max_score)
+            self._max_score = new_max_score
             self.storage.save(MAX_SCORE_LABEL, self._max_score)
 
     def reset_max_score(self):

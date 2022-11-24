@@ -6,10 +6,12 @@ from src.display import Display
 from src.gameover_screen import GameoverScreen
 from src.welcome_screen import WelcomeScreen
 
+
 DISPLAY_WIDTH: int = 1000
 DISPLAY_HEIGHT: int = 800
 NUM_OF_LANES: int = 10
 NUM_OF_ROWS: int = 10
+FPS = 40
 
 Logger()  # Global looger used during debugging
 
@@ -61,6 +63,7 @@ class Controller:
         self.game_event_loop()
         self.game_update_data()
         self.game_redraw()
+        self.clock.tick(FPS)
 
     def gameoverloop(self):
         '''
