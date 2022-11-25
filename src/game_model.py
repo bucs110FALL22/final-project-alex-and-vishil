@@ -18,12 +18,12 @@ class GameModel:
         constructor
         num_of_lanes: (int) number of lanes in the game. Used to calculate object sizes and positions.
         '''
-        self.storage = Storage(GAME_STORAGE_FILE_NAME)
+        self.storage: Storage = Storage(GAME_STORAGE_FILE_NAME)
         self.load_max_score()
-        self.num_of_lanes = num_of_lanes
-        self.score = 0
-        self.game_speed_factor = 1
-        self.is_over = False
+        self.num_of_lanes: int = num_of_lanes
+        self.score: float = 0
+        self.game_speed_factor: float = 1
+        self.is_over: bool = False
         self.falling_objects: FallingObject[0] = []
         FallingObject.num_of_lanes = num_of_lanes
         self.start_game()
@@ -55,7 +55,7 @@ class GameModel:
         '''
         Initializes the main character
         '''
-        self.character = MainCharacter(self.num_of_lanes)
+        self.character: MainCharacter = MainCharacter(self.num_of_lanes)
 
     def init_falling_objects(self):
         '''
@@ -194,28 +194,28 @@ class GameModel:
         '''
         Loads the maximum score from the storage file
         '''
-        self._max_score = self.storage.load(MAX_SCORE_LABEL)
+        self.max_score = self.storage.load(MAX_SCORE_LABEL)
 
     def get_max_score(self) -> int:
         '''
         return: (int) the current maximum score
         '''
-        return self._max_score
+        return self.max_score
 
     def set_max_score(self, new_max_score: int):
         '''
         Sets the current maximum score
         '''
-        if new_max_score > self._max_score:
-            self._max_score = new_max_score
-            self.storage.save(MAX_SCORE_LABEL, self._max_score)
+        if new_max_score > self.max_score:
+            self.max_score = new_max_score
+            self.storage.save(MAX_SCORE_LABEL, self.max_score)
 
     def reset_max_score(self):
         '''
         Forces the max score to zero. Used maily for testing.
         '''
-        self._max_score = 0
-        self.storage.save(MAX_SCORE_LABEL, self._max_score)
+        self.max_score = 0
+        self.storage.save(MAX_SCORE_LABEL, self.max_score)
 
     def get_score(self) -> int:
         '''

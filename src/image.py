@@ -21,7 +21,7 @@ class Image:
     def draw(self, surface, x, y):
         '''
         Displays image on the surface
-        surface: (pygame surface) Surface to diplay image on.
+        surface: (pygame surface) Surface to display image on.
         '''
 
         image_loc = self.image.get_rect()

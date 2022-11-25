@@ -20,7 +20,13 @@
 
 ## Project Description
 
-A game where bombs and other items rain down from the sky and the character has to avoid the harmful ones and collect the reward items such as extra lives, money bags, and point amplifiers. The longer the character stays alive the more points it gets. The longer the user plays the harder it gets.
+* An arcade game written in Python using Pygame as a GUI framework.
+* Mario bomber is a game where bombs and other items rain down from the sky
+* Mario, the character, has to avoid the harmful bombs raining from the sky.
+* Raining mushrooms give Mario an extra life, but make the game go faster.
+* The longer the character stays alive the more points you receive.
+* In addition to the GUI, the game has a sound track and sound effects.
+
 
 ### Requirements:
 
@@ -33,14 +39,14 @@ A game where bombs and other items rain down from the sky and the character has 
 
 #### Nice to Have
 * Lives are counted :white_check_mark:
-* Game over on loosing all lives :white_check_mark:
+* Game over on losing all lives :white_check_mark:
 * Scoring sytem :white_check_mark:
 * Prize items :white_check_mark:
 * Sound effects :white_check_mark:
 * Background soundtrack :white_check_mark:
 
 #### Dream
-Different Levels
+* Different Levels
 * Character choice.
 * Score board :white_check_mark:
 * Variety of power ups with different effects
@@ -48,7 +54,7 @@ Different Levels
 * Multiplayer
 
 #### Additional Requirements
-Requirements added after proposal
+Requirements added after proposal:
 * Welcome screen  :white_check_mark:
 * Game over screen :white_check_mark:
 * Max score :white_check_mark:
@@ -63,7 +69,7 @@ Requirements added after proposal
 
 - **Initial Concept**
 
-  - **Initial Welcome Screen:**![Welcome Screen](etc/alexvishil_welcome_screen.png)
+  - **Initial Welcome Screen:**[Welcome Screen](etc/alexvishil_welcome_screen.png)
   - **Initial Game Screen:**![Game Screen](etc/alexvishil_game_screen.png)
   - **Initial Game Over Screen:**![Game Over Screen](etc/alexvishil_gameover_screen.png)
     
@@ -137,7 +143,7 @@ The Project is broken down into the following file structure:
     * storage.py
     * welcome_screen.py
 * assets
-    * bomb.py
+    * bomb.png
     * button-3.wav
     * button-10.wav
     * character.png
@@ -167,7 +173,7 @@ The Project is broken down into the following file structure:
    * Back end - both Alex and Vishil
    * Data Permanence - Alex
    * Keyboard input - Vishil
-   * ATP - Vishil
+   * Application Testing Procedure (ATP) - Vishil
    * Class Diagrams - Alex
    * Sounds - Alex
    * Readme and Demo slides - Alex and Vishil
@@ -183,8 +189,9 @@ The Project is broken down into the following file structure:
   * Q key exits the game at any point.
   * S key stops the sound track.
   * O key forces a game over to go to the game over screen quickly
+  * G key controls output to the console - used for debugging of specific problems.
 
-## ATP - Aceptance Test Procedure 
+## ATP - Acceptance Test Procedure 
 * Test in google sheet [here](https://docs.google.com/spreadsheets/d/1MablQK_4zeBLgjPA5U0bhSgzQufty_5_jJ7-jCT0CRc/edit?usp=sharing)
 
 | Step | Procedure                                                              | Expected Result                                                                                        |
@@ -196,7 +203,7 @@ The Project is broken down into the following file structure:
 | 5    | Welcome screen - no action needed                                      | Background music is playing (locally not on Replit)                                                    |
 | 6    | Welcome screen - Press s key while music is off                        | Music starts (note - music does not work on Replit, only on local                                      |
 | 7    | Welcome screen - Press s while music is on                             | Music stops (note - music does not work on Replit, only on local                                       |
-| 8    | Welcome screen - Press R                                               | The max score is reset to zero - you will be able to tell when the game is starte pressing S           |
+| 8    | Welcome screen - Press R                                               | The max score is reset to zero - you will be able to tell when the game is start pressing S            |
 | 9    | Welcome screen - Press q                                               | Applicaiton cleanly exits                                                                              |
 | 10   | Run the program to display the welcome screen                          | Application opens and welcome screen appears                                                           |
 | 11   | Welcome screen - Press Space bar                                       | Game starts, the game screen shows and object start falling from the top to the bottom                 |

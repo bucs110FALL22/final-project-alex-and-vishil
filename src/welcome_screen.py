@@ -32,7 +32,7 @@ class WelcomeScreen:
         '''
         self.draw_game_title()
         self.draw_welcome_character()
-        self.diplay_instructions()
+        self.display_instructions()
 
     def draw_game_title(self):
         '''
@@ -56,7 +56,7 @@ class WelcomeScreen:
         font_size = 30
         Helper.print(surface, text, font_size, (x_text, y_text))
 
-    def diplay_instructions(self):
+    def display_instructions(self):
         '''
         Prints the game instructions on the screen.
         '''

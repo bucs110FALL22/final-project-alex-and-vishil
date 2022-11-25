@@ -72,7 +72,7 @@ class Scoreboard():
         '''
         Draws the max score in the scoreboard
         '''
-        max_score = self.game_model._max_score
+        max_score = self.game_model.max_score
         margin = self.display.lane_width / 2
         x_score = self.display.width - 3 * margin
         y_score = margin
