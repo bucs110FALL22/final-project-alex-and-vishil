@@ -74,15 +74,16 @@ Requirements added after proposal
 
 ## Program Design
 
-* Non-Standard libraries
-    * << You should have a list of any additional libraries or modules used (pygame, request) beyond non-standard python. 
-         For each additional module you should include
-         - url for the module documentation
-         - a short description of the module >>
-   - Pygame - provides the graphing and event framework for the game.
-* Class Interface Design (will provide this at the end of the project - see Class List below)
-    * << A simple drawing that shows the class relationships in your code (see below for an example). This does not need to be overly detailed, but should show how your code fits into the Model/View/Controller paradigm. >>
-        * ![class diagram](assets/class_diagram.jpg) 
+* **Python libraries and tools**
+   - [Pygame](https://www.pygame.org/docs/) - provides the graphing and event framework for the game.
+   - [shelve](https://docs.python.org/3/library/shelve.html) - is a persistent, dictionary-like object.
+   - [os](https://docs.python.org/3/library/os.html) - provides a portable way of using operating system dependent functionality
+   - [random](https://docs.python.org/3/library/random.html) - implements pseudo-random number generators for various distributions.
+   - [pyreverse](https://pylint.pycqa.org/en/latest/pyreverse.html) - analyzes your source code and generates package and class diagrams.
+     
+* **Class Interface Design** 
+
+        * ![class diagram](etc/class_diagram.jpg) 
 * **Classes**
     * **Assets** - translates between in game assets name to the file path to load the asset.
     * **Background** - Responsible for the appication and in game background image and soundtrack.
