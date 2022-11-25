@@ -3,7 +3,7 @@ from src.storage import Storage
 from src.falling_object import FallingObject
 from src.character import MainCharacter
 
-GAME_STORAGE_FILE_NAME = 'mario_storage.txt'
+GAME_STORAGE_FILE_NAME = './etc/mario_storage.txt'
 MAX_SCORE_LABEL = 'game_max_score'
 SPEED_DELTA = 1.3
 

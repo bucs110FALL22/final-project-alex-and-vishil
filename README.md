@@ -122,7 +122,6 @@ Requirements added after proposal:
 The Project is broken down into the following file structure:
 
 * main.py
-* mario_storage.txt (temp runtime file for storing highers score)
 * src
     * assets.py
     * background.py
@@ -160,6 +159,7 @@ The Project is broken down into the following file structure:
     * class_diagram.html
     * game_class_diagram.png
     * app_class_diagram.png
+    * mario_storage.txt (temp runtime file for storing highers score)
     * milestone2.md
 
 ***
